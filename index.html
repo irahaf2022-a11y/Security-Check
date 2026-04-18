@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Check</title>
+<link rel="icon" href="logo.png">
+
+<style>
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:Arial;
+background:#f5f5f5;
+direction:rtl;
+}
+
+.container{
+width:90%;
+max-width:650px;
+height:650px;
+margin:60px auto;
+background:white;
+border:4px solid #8b0000;
+border-radius:25px;
+padding:30px;
+text-align:center;
+}
+
+.page{display:none;}
+.active{display:block;}
+
+.logo{
+width:150px;
+margin-bottom:10px;
+}
+
+h1{font-size:32px;font-weight:900;}
+h2{font-size:26px;font-weight:900;}
+
+.main-text{
+font-size:20px;
+font-weight:900;
+line-height:1.8;
+}
+
+input,select{
+width:100%;
+max-width:520px;
+padding:15px;
+margin:10px 0;
+border-radius:12px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+button{
+width:100%;
+max-width:520px;
+padding:16px;
+margin-top:10px;
+background:#8b0000;
+color:white;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:900;
+}
+
+.secondary{
+background:#ddd;
+color:black;
+}
+
+.msg{font-size:14px;margin-top:5px;}
+.error{color:red;}
+.success{color:green;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- الرئيسية -->
+<div class="page active" id="p1">
+<img src="logoW.png" class="logo">
+
+<h1>مرحبًا بك في تطبيقنا Security Check</h1>
+<p class="main-text">
+الذي أمانك فيه أولويتنا .... وحمايتك مسؤوليتنا
+</p>
+
+<button onclick="go(2)">تسجيل الدخول</button>
+<button class="secondary" onclick="go(3)">إنشاء حساب</button>
+</div>
+
+<!-- تسجيل -->
+<div class="page" id="p2">
+<img src="logoW.png" class="logo">
+<h2>تسجيل الدخول</h2>
+
+<input id="lu" placeholder="اسم المستخدم">
+
+<div style="position:relative;max-width:520px;margin:auto;">
+<input id="lp" type="password" placeholder="كلمة المرور" style="padding-left:45px;">
+<span id="eye" onclick="togglePass()" style="
+position:absolute;
+left:12px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+font-size:18px;
+">👁</span>
+</div>
+
+<div id="loginMsg" class="msg"></div>
+
+<button onclick="login()">دخول</button>
+<button class="secondary" onclick="go(1)">رجوع</button>
+</div>
+
+<!-- إنشاء -->
+<div class="page" id="p3">
+<img src="logoW.png" class="logo">
+<h2>إنشاء حساب</h2>
+
+<input id="nu" placeholder="اسم المستخدم">
+<input id="np" type="password" placeholder="كلمة المرور">
+
+<button onclick="register()">إنشاء</button>
+<button class="secondary" onclick="go(1)">رجوع</button>
+</div>
+
+<!-- كيف يعمل -->
+<div class="page" id="p4">
+<img src="logoW.png" class="logo">
+<h2>كيف يعمل التطبيق؟</h2>
+
+<p class="main-text">
+يعتمد التطبيق على نظام تحقق ذكي لحماية حساباتك في الأجهزة المشتركة.<br><br>
+يتم طرح أسئلة خاصة بك ويتم تشفير الإجابة بطريقة تختارها بنفسك،
+مما يمنع أي شخص غير مصرح له من الوصول.<br><br>
+حتى لو تم فتح الجهاز، تبقى بياناتك آمنة.
+</p>
+
+<button onclick="go(5)">التالي</button>
+</div>
+
+<!-- الإعدادات -->
+<div class="page" id="p5">
+<img src="logoW.png" class="logo">
+<h2>الإعدادات</h2>
+
+<select id="field">
+<option value="0">دين</option>
+<option value="1">جغرافيا</option>
+<option value="2">رياضة</option>
+<option value="3">حيوانات</option>
+<option value="4">تقنية</option>
+<option value="5">تاريخ</option>
+</select>
+
+<select id="enc">
+<option value="num">تحويل الحروف لأرقام</option>
+<option value="reverse">عكس الكلمة</option>
+<option value="length">عدد الحروف</option>
+<option value="cut">حذف أول وآخر حرف</option>
+<option value="firstlast">أول وآخر حرف</option>
+</select>
+
+<button onclick="saveSettings()">حفظ</button>
+</div>
+
+<!-- متى يظهر -->
+<div class="page" id="p6">
+<img src="logoW.png" class="logo">
+<h2>متى يتم طلب التحقق؟</h2>
+
+<p class="main-text">
+يتم طلب التحقق عند وجود نشاط غير طبيعي مثل:<br><br>
+• تسجيل دخول جديد<br>
+• تغيير في طريقة الاستخدام<br>
+• استخدام جهاز مختلف<br>
+• اختلاف في نمط التفاعل<br><br>
+وذلك لضمان أن المستخدم هو الشخص الحقيقي.
+</p>
+
+<button onclick="startQ()">التالي</button>
+</div>
+
+<!-- التحقق -->
+<div class="page" id="p7">
+<img src="logoW.png" class="logo">
+<h2>سؤال التحقق</h2>
+
+<p id="q"></p>
+<input id="ans">
+
+<div id="qMsg" class="msg"></div>
+
+<button onclick="checkAnswer()">تحقق</button>
+</div>
+
+</div>
+
+<script>
+let attempts=2;
+let currentAnswer="";
+let lockedUsers={};
+
+let map={
+"ا":1,"ب":2,"ت":3,"ث":4,"ج":5,"ح":6,"خ":7,"د":8,"ذ":9,"ر":10,
+"ز":11,"س":12,"ش":13,"ص":14,"ض":15,"ط":16,"ظ":17,"ع":18,"غ":19,
+"ف":20,"ق":21,"ك":22,"ل":23,"م":24,"ن":25,"ه":26,"و":27,"ي":28
+};
+
+let questions=[
+[["ما اسم كتاب المسلمين؟","قران"]],
+[["ما عاصمة السعودية؟","الرياض"]],
+[["كم لاعب في كرة القدم؟","احد عشر"]],
+[["حيوان له خرطوم؟","فيل"]],
+[["محرك البحث الشهير؟","قوقل"]],
+[["اول انسان؟","ادم"]]
+];
+
+function go(n){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById("p"+n).classList.add("active");
+}
+
+function togglePass(){
+if(lp.type==="password"){
+lp.type="text";
+eye.innerText="👁️‍🗨️";
+}else{
+lp.type="password";
+eye.innerText="👁";
+}
+}
+
+function register(){
+localStorage.setItem("u",nu.value);
+localStorage.setItem("p",np.value);
+go(2);
+}
+
+function login(){
+if(lockedUsers[lu.value]){
+loginMsg.innerText="الحساب مقفل";
+loginMsg.className="msg error";
+return;
+}
+
+if(lu.value==localStorage.getItem("u") && lp.value==localStorage.getItem("p")){
+go(4);
+}else{
+loginMsg.innerText="بيانات خاطئة";
+loginMsg.className="msg error";
+}
+}
+
+function saveSettings(){
+localStorage.setItem("field",field.value);
+localStorage.setItem("enc",enc.value);
+go(6);
+}
+
+function startQ(){
+attempts=2;
+let list=questions[localStorage.getItem("field")];
+let i=Math.floor(Math.random()*list.length);
+q.innerText=list[i][0];
+currentAnswer=list[i][1];
+go(7);
+}
+
+function encrypt(a,t){
+a=a.replace(/\s/g,'');
+
+if(t=="num"){
+return a.split("").map(c=>map[c]||"").join("");
+}
+if(t=="reverse") return a.split("").reverse().join("");
+if(t=="length") return a.length+"";
+if(t=="cut") return a.slice(1,-1);
+if(t=="firstlast") return a[0]+a[a.length-1];
+}
+
+function checkAnswer(){
+let t=localStorage.getItem("enc");
+
+if(encrypt(ans.value,t)==encrypt(currentAnswer,t)){
+qMsg.innerText="✔ تم التحقق بنجاح";
+qMsg.className="msg success";
+}else{
+attempts--;
+if(attempts<=0){
+lockedUsers[lu.value]=true;
+qMsg.innerText="تم قفل الحساب";
+qMsg.className="msg error";
+setTimeout(()=>go(1),1500);
+}else{
+qMsg.innerText="إجابة خاطئة";
+qMsg.className="msg error";
+}
+}
+}
+</script>
+
+</body>
+</html>
