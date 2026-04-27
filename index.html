@@ -24,31 +24,26 @@ margin:60px auto;
 background:white;
 border:4px solid #8b0000;
 border-radius:25px;
-padding:30px;
+padding:25px;
 text-align:center;
+overflow:hidden;
 }
 
 .page{display:none;}
 .active{display:block;}
 
-.logo{
-width:150px;
-margin-bottom:10px;
-}
+.logo{width:130px;margin-bottom:10px;}
 
-h1{font-size:32px;font-weight:900;}
+h1{font-size:36px;font-weight:900;}
 h2{font-size:26px;font-weight:900;}
 
-.main-text{
-font-size:20px;
-font-weight:900;
-line-height:1.8;
-}
+.main-text{font-size:18px;font-weight:800;line-height:1.8;}
+.small-text{font-size:16px;font-weight:700;line-height:1.8;}
 
 input,select{
 width:100%;
 max-width:520px;
-padding:15px;
+padding:14px;
 margin:10px 0;
 border-radius:12px;
 border:1px solid #ccc;
@@ -58,24 +53,33 @@ font-size:16px;
 button{
 width:100%;
 max-width:520px;
-padding:16px;
+padding:15px;
 margin-top:10px;
 background:#8b0000;
 color:white;
 border:none;
 border-radius:12px;
-font-size:18px;
+font-size:17px;
 font-weight:900;
 }
 
-.secondary{
-background:#ddd;
-color:black;
+.secondary{background:#ddd;color:black;}
+
+.msg{font-size:14px;margin-top:6px;}
+
+#q{
+font-size:20px;
+font-weight:900;
+margin:20px 0;
+min-height:40px;
 }
 
-.msg{font-size:14px;margin-top:5px;}
-.error{color:red;}
-.success{color:green;}
+.success{
+font-size:28px;
+font-weight:900;
+color:green;
+margin-top:15px;
+}
 </style>
 </head>
 
@@ -83,17 +87,20 @@ color:black;
 
 <div class="container">
 
-<!-- الرئيسية -->
+<!-- 1 -->
 <div class="page active" id="p1">
 <img src="logoW.png" class="logo">
 
-<h1>مرحبًا بك في تطبيقنا Security Check</h1>
-<p class="main-text">
-الذي أمانك فيه أولويتنا .... وحمايتك مسؤوليتنا
-</p>
+<h1>Security Check</h1>
+
+<p class="main-text">نظام تحقق لحماية الحسابات</p>
 
 <button onclick="go(2)">تسجيل الدخول</button>
 <button class="secondary" onclick="go(3)">إنشاء حساب</button>
+
+<p style="margin-top:10px;font-size:14px;font-weight:700;">
+من إنجاز طالبات ثانوية معهد الرياض النموذجي
+</p>
 </div>
 
 <!-- تسجيل -->
@@ -103,17 +110,7 @@ color:black;
 
 <input id="lu" placeholder="اسم المستخدم">
 
-<div style="position:relative;max-width:520px;margin:auto;">
-<input id="lp" type="password" placeholder="كلمة المرور" style="padding-left:45px;">
-<span id="eye" onclick="togglePass()" style="
-position:absolute;
-left:12px;
-top:50%;
-transform:translateY(-50%);
-cursor:pointer;
-font-size:18px;
-">👁</span>
-</div>
+<input id="lp" type="password" placeholder="كلمة المرور">
 
 <div id="loginMsg" class="msg"></div>
 
@@ -129,6 +126,8 @@ font-size:18px;
 <input id="nu" placeholder="اسم المستخدم">
 <input id="np" type="password" placeholder="كلمة المرور">
 
+<div id="regMsg" class="msg"></div>
+
 <button onclick="register()">إنشاء</button>
 <button class="secondary" onclick="go(1)">رجوع</button>
 </div>
@@ -136,19 +135,21 @@ font-size:18px;
 <!-- كيف يعمل -->
 <div class="page" id="p4">
 <img src="logoW.png" class="logo">
+
 <h2>كيف يعمل التطبيق؟</h2>
 
-<p class="main-text">
-يعتمد التطبيق على نظام تحقق ذكي لحماية حساباتك في الأجهزة المشتركة.<br><br>
-يتم طرح أسئلة خاصة بك ويتم تشفير الإجابة بطريقة تختارها بنفسك،
-مما يمنع أي شخص غير مصرح له من الوصول.<br><br>
-حتى لو تم فتح الجهاز، تبقى بياناتك آمنة.
+<p class="small-text">
+يعتمد التطبيق على نظام تحقق ذكي لحماية الحسابات.<br><br>
+
+يتم طرح أسئلة خاصة ويتم تشفير الإجابة حسب اختيارك.<br><br>
+
+حتى لو تم فتح الجهاز تبقى البيانات آمنة.
 </p>
 
 <button onclick="go(5)">التالي</button>
 </div>
 
-<!-- الإعدادات -->
+<!-- إعدادات -->
 <div class="page" id="p5">
 <img src="logoW.png" class="logo">
 <h2>الإعدادات</h2>
@@ -165,40 +166,41 @@ font-size:18px;
 <select id="enc">
 <option value="num">تحويل الحروف لأرقام</option>
 <option value="reverse">عكس الكلمة</option>
-<option value="length">عدد الحروف</option>
-<option value="cut">حذف أول وآخر حرف</option>
 <option value="firstlast">أول وآخر حرف</option>
+<option value="length">عدد الحروف</option>
+<option value="trim">حذف أول وآخر حرف</option>
 </select>
 
 <button onclick="saveSettings()">حفظ</button>
 </div>
 
-<!-- متى يظهر -->
+<!-- التحقق -->
 <div class="page" id="p6">
 <img src="logoW.png" class="logo">
+
 <h2>متى يتم طلب التحقق؟</h2>
 
-<p class="main-text">
-يتم طلب التحقق عند وجود نشاط غير طبيعي مثل:<br><br>
+<p class="small-text">
 • تسجيل دخول جديد<br>
-• تغيير في طريقة الاستخدام<br>
-• استخدام جهاز مختلف<br>
-• اختلاف في نمط التفاعل<br><br>
-وذلك لضمان أن المستخدم هو الشخص الحقيقي.
+• جهاز مختلف<br>
+• نشاط غير طبيعي
 </p>
 
 <button onclick="startQ()">التالي</button>
 </div>
 
-<!-- التحقق -->
+<!-- السؤال -->
 <div class="page" id="p7">
 <img src="logoW.png" class="logo">
+
 <h2>سؤال التحقق</h2>
 
 <p id="q"></p>
+
 <input id="ans">
 
 <div id="qMsg" class="msg"></div>
+<div id="successBox"></div>
 
 <button onclick="checkAnswer()">تحقق</button>
 </div>
@@ -207,104 +209,154 @@ font-size:18px;
 
 <script>
 let attempts=2;
+
+let users = JSON.parse(localStorage.getItem("users")||"{}");
+let lockedUsers = JSON.parse(localStorage.getItem("lockedUsers")||"{}");
+
 let currentAnswer="";
-let lockedUsers={};
 
-let map={
-"ا":1,"ب":2,"ت":3,"ث":4,"ج":5,"ح":6,"خ":7,"د":8,"ذ":9,"ر":10,
-"ز":11,"س":12,"ش":13,"ص":14,"ض":15,"ط":16,"ظ":17,"ع":18,"غ":19,
-"ف":20,"ق":21,"ك":22,"ل":23,"م":24,"ن":25,"ه":26,"و":27,"ي":28
-};
-
+/* الأسئلة */
 let questions=[
-[["ما اسم كتاب المسلمين؟","قران"]],
-[["ما عاصمة السعودية؟","الرياض"]],
-[["كم لاعب في كرة القدم؟","احد عشر"]],
-[["حيوان له خرطوم؟","فيل"]],
-[["محرك البحث الشهير؟","قوقل"]],
-[["اول انسان؟","ادم"]]
+[
+["ما اسم كتاب المسلمين؟","قران"],
+["ما أول سورة؟","الفاتحة"],
+["من خاتم الأنبياء؟","محمد"]
+],
+[
+["ما عاصمة السعودية؟","الرياض"],
+["أكبر قارة؟","اسيا"],
+["أكبر محيط؟","الهادئ"]
+],
+[
+["كم لاعب كرة القدم؟","احد عشر"],
+["أداة التنس؟","مضرب"],
+["كم أشواط التنس؟","ثلاثة"]
+],
+[
+["حيوان له خرطوم؟","فيل"],
+["أسرع حيوان؟","فهد"],
+["سفينة الصحراء؟","جمل"]
+],
+[
+["محرك بحث؟","قوقل"],
+["شركة الآيفون؟","ابل"],
+["نظام تشغيل؟","اندرويد"]
+],
+[
+["مؤسس السعودية؟","عبدالعزيز"],
+["مدينة الرسول؟","المدينة"],
+["غزوة مشهورة؟","بدر"]
+]
 ];
 
+/* تنقل */
 function go(n){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById("p"+n).classList.add("active");
 }
 
-function togglePass(){
-if(lp.type==="password"){
-lp.type="text";
-eye.innerText="👁️‍🗨️";
-}else{
-lp.type="password";
-eye.innerText="👁";
-}
+/* قفل حقيقي */
+function isLocked(user){
+let data = lockedUsers[user];
+if(!data) return false;
+
+if(Date.now() < data) return true;
+
+delete lockedUsers[user];
+localStorage.setItem("lockedUsers",JSON.stringify(lockedUsers));
+return false;
 }
 
+/* تسجيل */
 function register(){
-localStorage.setItem("u",nu.value);
-localStorage.setItem("p",np.value);
+users[nu.value]=np.value;
+localStorage.setItem("users",JSON.stringify(users));
 go(2);
 }
 
+/* دخول */
 function login(){
-if(lockedUsers[lu.value]){
-loginMsg.innerText="الحساب مقفل";
-loginMsg.className="msg error";
+
+if(isLocked(lu.value)){
+loginMsg.innerHTML="<b style='color:red'>الحساب مقفل 30 دقيقة</b>";
 return;
 }
 
-if(lu.value==localStorage.getItem("u") && lp.value==localStorage.getItem("p")){
+if(users[lu.value] && users[lu.value]===lp.value){
 go(4);
 }else{
-loginMsg.innerText="بيانات خاطئة";
-loginMsg.className="msg error";
+loginMsg.innerText="خطأ";
 }
 }
 
+/* إعدادات */
 function saveSettings(){
 localStorage.setItem("field",field.value);
 localStorage.setItem("enc",enc.value);
 go(6);
 }
 
+/* السؤال */
 function startQ(){
 attempts=2;
-let list=questions[localStorage.getItem("field")];
-let i=Math.floor(Math.random()*list.length);
-q.innerText=list[i][0];
-currentAnswer=list[i][1];
+
+let f = localStorage.getItem("field") || 0;
+
+let list = questions[f];
+let pick = list[Math.floor(Math.random()*list.length)];
+
+currentAnswer = pick;
+
+document.getElementById("q").textContent = pick[0];
+
 go(7);
 }
 
+/* تنظيف قوي */
+function clean(a){
+return a
+.replace(/\s/g,'')
+.replace(/^ال/,'')
+.replace(/أ|إ/g,'ا')
+.trim();
+}
+
+/* تشفير */
 function encrypt(a,t){
-a=a.replace(/\s/g,'');
+a=clean(a);
 
-if(t=="num"){
-return a.split("").map(c=>map[c]||"").join("");
-}
+if(t=="num") return a.split("").map(c=>c.charCodeAt(0)%10).join("");
 if(t=="reverse") return a.split("").reverse().join("");
+if(t=="firstlast") return a.length<=2?a:a[0]+a[a.length-1];
 if(t=="length") return a.length+"";
-if(t=="cut") return a.slice(1,-1);
-if(t=="firstlast") return a[0]+a[a.length-1];
+if(t=="trim") return a.length>2?a.slice(1,-1):a;
+if(t=="identity") return a;
 }
 
+/* تحقق */
 function checkAnswer(){
-let t=localStorage.getItem("enc");
 
-if(encrypt(ans.value,t)==encrypt(currentAnswer,t)){
-qMsg.innerText="✔ تم التحقق بنجاح";
-qMsg.className="msg success";
-}else{
+let t = localStorage.getItem("enc");
+
+let userAns = encrypt(ans.value,t);
+let correct = encrypt(currentAnswer[1],t);
+
+if(userAns === correct){
+document.getElementById("successBox").innerHTML="✔<br>صحيح";
+document.getElementById("successBox").className="success";
+return;
+}
+
 attempts--;
+
 if(attempts<=0){
-lockedUsers[lu.value]=true;
-qMsg.innerText="تم قفل الحساب";
-qMsg.className="msg error";
+lockedUsers[lu.value]=Date.now()+1800000;
+localStorage.setItem("lockedUsers",JSON.stringify(lockedUsers));
+
+qMsg.innerHTML="<b style='color:red'>تم قفل الحساب 30 دقيقة</b>";
 setTimeout(()=>go(1),1500);
 }else{
-qMsg.innerText="إجابة خاطئة";
-qMsg.className="msg error";
-}
+qMsg.innerText="خطأ";
 }
 }
 </script>
